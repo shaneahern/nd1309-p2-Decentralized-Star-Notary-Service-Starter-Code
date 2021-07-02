@@ -1,4 +1,21 @@
-# ND1309 C2 Ethereum Smart Contracts, Tokens and Dapps - Project Starter 
+# FORK of ND1309 C2 Ethereum Smart Contracts, Tokens and Dapps
+
+**Library versions used in the project:**
+* openzeppelin-solidity@2.3
+* Truffle v5.3.10 (core: 5.3.10)
+* Solidity v0.5.16 (solc-js)
+* Node v14.17.1
+* Web3.js v1.3.6
+
+**ERC-721 Token Name:** Dogesurance
+
+**ERC-721 Token Symbol:** DINS
+
+**Token Address on the Rinkeby Network:** [0xb5453d2abcff7d19c60cbb6f49583a01ba2317b3](https://rinkeby.etherscan.io/token/0xb5453d2abcff7d19c60cbb6f49583a01ba2317b3)
+
+
+## Original forked project Readme
+
 **PROJECT: Decentralized Star Notary Service Project** - For this project, you will create a DApp by adding functionality with your smart contract and deploy it on the public testnet.
 
 ### ToDo
