@@ -2,9 +2,10 @@ pragma solidity >=0.4.24;
 
 //Importing openzeppelin-solidity ERC-721 implemented Standard
 import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol";
+import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721Metadata.sol";
 
 // StarNotary Contract declaration inheritance the ERC721 openzeppelin implementation
-contract StarNotary is ERC721 {
+contract StarNotary is ERC721, ERC721Metadata {
 
     // Star data
     struct Star {
@@ -14,7 +15,8 @@ contract StarNotary is ERC721 {
     // Implement Task 1 Add a name and symbol properties
     // name: Is a short name to your token
     // symbol: Is a short string like 'USD' -> 'American Dollar'
-    
+
+    constructor() public ERC721Metadata("Dogesurance", "DINS") {}
 
     // mapping the Star with the Owner Address
     mapping(uint256 => Star) public tokenIdToStarInfo;
@@ -31,7 +33,7 @@ contract StarNotary is ERC721 {
 
     // Putting an Star for sale (Adding the star tokenid into the mapping starsForSale, first verify that the sender is the owner)
     function putStarUpForSale(uint256 _tokenId, uint256 _price) public {
-        require(ownerOf(_tokenId) == msg.sender, "You can't sale the Star you don't owned");
+        require(ownerOf(_tokenId) == msg.sender, "You can't sell a Star you don't own");
         starsForSale[_tokenId] = _price;
     }
 
@@ -56,7 +58,9 @@ contract StarNotary is ERC721 {
 
     // Implement Task 1 lookUptokenIdToStarInfo
     function lookUptokenIdToStarInfo (uint _tokenId) public view returns (string memory) {
-        //1. You should return the Star saved in tokenIdToStarInfo mapping
+        //return the Star saved in tokenIdToStarInfo mapping
+        Star storage star = tokenIdToStarInfo[_tokenId];
+        return star.name;
     }
 
     // Implement Task 1 Exchange Stars function
@@ -65,12 +69,22 @@ contract StarNotary is ERC721 {
         //2. You don't have to check for the price of the token (star)
         //3. Get the owner of the two tokens (ownerOf(_tokenId1), ownerOf(_tokenId1)
         //4. Use _transferFrom function to exchange the tokens.
+        address owner1Address = ownerOf(_tokenId1);
+        address owner2Address = ownerOf(_tokenId2);
+        if (owner1Address == msg.sender || owner2Address == msg.sender) {
+            _transferFrom(owner1Address, owner2Address, _tokenId1);
+            _transferFrom(owner2Address, owner1Address, _tokenId2);
+        }
+
     }
 
     // Implement Task 1 Transfer Stars
     function transferStar(address _to1, uint256 _tokenId) public {
         //1. Check if the sender is the ownerOf(_tokenId)
         //2. Use the transferFrom(from, to, tokenId); function to transfer the Star
+        if (msg.sender == ownerOf(_tokenId)) {
+            _transferFrom(msg.sender, _to1, _tokenId);
+        }
     }
 
 }

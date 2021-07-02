@@ -27,8 +27,13 @@ const App = {
   },
 
   setStatus: function(message) {
-    const status = document.getElementById("status");
-    status.innerHTML = message;
+    const createStarStatus = document.getElementById("createStarStatus");
+    createStarStatus.innerHTML = message;
+  },
+
+  setStarName: function(name) {
+    const starNameStatus = document.getElementById("starNameStatus");
+    starNameStatus.innerHTML = name;
   },
 
   createStar: async function() {
@@ -40,8 +45,16 @@ const App = {
   },
 
   // Implement Task 4 Modify the front end of the DAPP
-  lookUp: async function (){
-    
+  lookUp: async function () {
+    const { lookUptokenIdToStarInfo } = this.meta.methods;
+    const idLook = document.getElementById("lookid").value;
+    lookUptokenIdToStarInfo(idLook).call().then(name => {
+      if (name) {
+        App.setStarName("Star for id " + idLook + " is " + name + ".");
+      } else {
+        App.setStarName("No star found for id " + idLook);
+      }
+    });
   }
 
 };
